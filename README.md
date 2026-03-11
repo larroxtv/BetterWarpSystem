@@ -1,56 +1,57 @@
-# 🌍 BetterWarpSystem
+![Slogan](https://cdn.modrinth.com/data/cached_images/8c6523b4f7db0a49d11f606fc5222efcdc9da1a8.png)
 
-A lightweight and configurable **Bukkit/Spigot/Paper** plugin for managing simple player warps — with support for customizable messages, sounds, colors, and runtime configuration reloads.
-
----
-
-## ✨ Features
-
-- 🧭 **Player warps** — set, teleport, list, and delete named warps  
-- 💾 **Persistent storage** — saves warps as YAML files on disk  
-- 🧩 **Fully configurable** — customize messages, colors, and sounds via `config.yml`  
-- 🔁 **Live reloading** — apply configuration changes at runtime  
-- ⚙️ **Optional confirmations** — prevent accidental warp deletion  
-- 💬 **Flexible notifications** — choose between chat messages, actionbar alerts, or both  
+> A lightweight and fully configurable warp plugin for Bukkit/Spigot/Paper — with custom sounds, colors, actionbar support, and live config reloads.
 
 ---
 
-## 🧱 Requirements
+## ⚡ Features
 
-- **Java:** 21  
-- **Server:** Spigot / Paper (built against Spigot API **1.21.x**)  
-- **Build tool:** Maven (for compiling from source)
+- 🧭 **Player Warps** — set, teleport to, list, and delete named warps with ease
+- 💾 **Persistent Storage** — every warp is saved as a YAML file on disk, nothing gets lost
+- 🎨 **Fully Configurable** — customize messages, colors, and sounds via `config.yml`
+- 🔁 **Live Reloading** — apply config changes at runtime without restarting
+- ✅ **Deletion Confirmation** — prevent accidents with a built-in confirmation flow (with TTL)
+- 💬 **Flexible Notifications** — choose between chat messages, actionbar alerts, or both
 
 ---
 
-## 🚀 Installation
+## 🕹️ Commands
 
-1. Place the generated **JAR** file in your server’s `plugins/` folder.  
-2. Start the server — the plugin will auto-create its data folder and default `config.yml`.  
-3. Edit `plugins/WarpSysPlugin/config.yml` to adjust settings.  
-4. Use the reload command in-game to apply changes instantly.
+| Command | Description | Permission |
+|:--------|:------------|:----------:|
+| `/setwarp <name>` | Set a warp at your location | `warpsystem.setwarp` |
+| `/warp <name>` | Teleport to a warp | *(everyone)* |
+| `/warps` | List all available warps | *(everyone)* |
+| `/delwarp <name>` | Start deletion flow | `warpsystem.delete` |
+| `/delwarp confirm <name>` | Confirm deletion within TTL | `warpsystem.delete` |
+| `/warpsysreloadconfig` | Reload the config live | `warpsystem.*` |
+
+---
+
+## 🔐 Permissions
+
+| Permission | Description | Default |
+|:-----------|:------------|:-------:|
+| `warpsystem.setwarp` | Create warps | OP |
+| `warpsystem.delete` | Delete warps | OP |
+| `warpsystem.*` | Full access | OP |
 
 ---
 
 ## ⚙️ Configuration
 
-All user-facing text, sounds, and colors are defined in `config.yml`.
-
-### 🔑 Key Settings (default values)
+All messages, colors, and sounds are defined in `config.yml`. Key settings:
 
 | Setting | Default | Description |
-|----------|----------|-------------|
+|:--------|:-------:|:------------|
 | `actionbar` | `true` | Show actionbar notifications |
 | `message` | `true` | Send chat messages |
 | `sound` | `true` | Play sounds on actions |
 | `color.primary` | `&7` | Primary text color |
-| `color.secondary` | `&a` | Highlight color |
-| `warps.folder` | `warplocations` | Folder where warps are stored |
+| `color.secondary` | `&a` | Highlight/accent color |
+| `warps.folder` | `warplocations` | Folder for warp files |
 
-### 🔊 Sound Settings
-
-Uses Bukkit’s [`Sound`](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html) enum names:
-
+### 🔊 Sounds
 ```yaml
 sounds:
   success: 'ENTITY_VILLAGER_TRADE'
@@ -59,7 +60,6 @@ sounds:
 ```
 
 ### 🧨 Deletion Confirmation
-
 ```yaml
 confirmation:
   delete:
@@ -67,88 +67,54 @@ confirmation:
     ttl_seconds: 20
 ```
 
-### 💬 Example Messages
-
+### 💬 Messages
 ```yaml
 messages:
-  reloaded: '&aConfiguration reloaded.'
   warp-set: '&aSuccessfully set warp "{warp}".'
   warp-deleted: '&aWarp "{warp}" deleted successfully.'
-  delete-confirm: '&ePlease confirm deletion: &c/delwarp confirm {warp} &ewithin {seconds}s.'
+  delete-confirm: '&ePlease confirm: &c/delwarp confirm {warp} &ewithin {seconds}s.'
 ```
 
-> [!TIP]
-> Use `&` for your Colorcodes, its mor readable than §.
+> 💡 **Tip:** Use `&` for color codes — it's more readable than `§`.
 
 ---
 
-## 🕹️ Commands
+## 🛠️ Installation
 
-| Command | Description | Permission |
-|----------|--------------|------------|
-| `/setwarp <name>` | Set a warp at your current location | `warpsystem.setwarp` |
-| `/warp <name>` | Teleport to a saved warp | *(everyone)* |
-| `/warps` | List all available warps | *(everyone)* |
-| `/delwarp <name>` | Start deletion flow | `warpsystem.delete` |
-| `/delwarp confirm <name>` | Confirm deletion within TTL | `warpsystem.delete` |
-| `/warpsysreloadconfig` | Reload the configuration | `warpsystem.*` |
+1. Download the `.jar` file
+2. Place it in your server's `/plugins` folder
+3. Restart your server — config auto-generates ✅
+4. Edit `plugins/WarpSysPlugin/config.yml` to your liking
+5. Use `/warpsysreloadconfig` to apply changes live
 
 ---
 
-## 🔐 Permissions
+## 🔧 Requirements
 
-| Permission | Description | Default |
-|-------------|--------------|----------|
-| `warpsystem.setwarp` | Allows creating warps | OP |
-| `warpsystem.delete` | Allows deleting warps | OP |
-| `warpsystem.*` | Grants all permissions | OP |
-
----
-
-## 📁 Data Storage
-
-- Each warp is saved as an individual YAML file in the configured folder (default: `plugins/WarpSysPlugin/warplocations/`).  
-- Configuration values are re-read at runtime when you run `/warpsysreloadconfig`.  
-- Deletion confirmations are stored per-player and expire after the configured TTL.
+| | |
+|:-|:-|
+| **Java** | 21+ |
+| **Server** | Spigot / Paper 1.21.x |
 
 ---
 
 ## 🧩 Troubleshooting
 
-- If warps aren’t being created or listed, make sure the plugin can write to its `plugins/` subfolder.  
-- If sounds fail, double-check the Bukkit `Sound` enum names in your config. Invalid names fall back to defaults.
+- **Warps not saving?** Make sure the plugin has write access to the `plugins/` folder
+- **Sounds not working?** Double-check Bukkit `Sound` enum names — invalid names fall back to defaults
 
 ---
 
-## 🤝 Contributing
+## 🔗 Source Code & Contributing
 
-Contributions are welcome!  
-Please open pull requests or issues for bugs, improvements, or new features. Keep changes small, focused, and tested.
+This plugin is **open source** — contributions, bug reports, and feature requests are welcome!
+
+👉 [View on GitHub](https://github.com/larroxtv/BetterWarpSystem) · [Report Issues](https://github.com/larroxtv/BetterWarpSystem/issues)
 
 ---
 
-## 📜 License
+<div align="center">
 
-```
-MIT License
+*Made with ❤️ by Larrox*
 
-Copyright (c) 2025 Larrox
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+</div>
