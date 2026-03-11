@@ -6,7 +6,7 @@
 
 ## ⚡ Features
 
-- 🧭 **Player Warps** — set, teleport to, list, and delete named warps with ease
+- 🧭 **Warps** — set, teleport to, list, and delete named warps with ease
 - 💾 **Persistent Storage** — every warp is saved as a YAML file on disk, nothing gets lost
 - 🎨 **Fully Configurable** — customize messages, colors, and sounds via `config.yml`
 - 🔁 **Live Reloading** — apply config changes at runtime without restarting
