@@ -4,6 +4,9 @@
 
 ---
 
+> [!NOTE]
+> BetterWarpSystem is discontinued. Use [WarpSystem](https://github.com/erikzimmermann/WarpSystem-Code) instead.
+
 ## ⚡ Features
 
 - 🧭 **Warps** — set, teleport to, list, and delete named warps with ease
